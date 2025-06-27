@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dynamic Quote Generator</title>
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <label for="categorySelect">Select Category:</label>
-  <select id="categorySelect">
-    <option value="all">All</option>
-  </select>
+  <!-- Dropdown to filter quotes -->
+  <select id="categorySelect"></select>
 
-  <div id="quoteDisplay" style="margin: 20px 0; font-style: italic;"></div>
+  <!-- Where the quote is displayed -->
+  <div id="quoteDisplay"></div>
 
+  <!-- Show random quote -->
   <button id="newQuote">Show New Quote</button>
 
-  <h2>Add a New Quote</h2>
-  <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-  <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-  <button id="addQuoteBtn">Add Quote</button>
+  <!-- Export and import buttons -->
+  <button onclick="exportToJsonFile()">Export Quotes</button>
+  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 
+  <!-- script file -->
   <script src="script.js"></script>
 </body>
 </html>
