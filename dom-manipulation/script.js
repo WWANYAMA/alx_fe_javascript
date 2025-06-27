@@ -1,64 +1,78 @@
-// Initial array of quotes with text and category
-const quotes = [
-  { text: "Believe in yourself!", category: "Motivation" },
-  { text: "Code is like humor. When you have to explain it, it’s bad.", category: "Programming" },
-  { text: "The best time to plant a tree was 20 years ago. The second best time is now.", category: "Wisdom" }
+// ✅ 1. Array of quotes with text and category
+let quotes = [
+  { text: "Believe in yourself.", category: "inspiration" },
+  { text: "Every moment matters.", category: "life" },
+  { text: "Failure is success in progress.", category: "motivation" }
 ];
 
-// Get references to DOM elements
+// ✅ 2. Get references to DOM elements
 const quoteDisplay = document.getElementById("quoteDisplay");
 const categorySelect = document.getElementById("categorySelect");
-const newQuoteButton = document.getElementById("newQuote");
+const newQuoteBtn = document.getElementById("newQuote");
+const addQuoteBtn = document.getElementById("addQuoteBtn");
+const newQuoteText = document.getElementById("newQuoteText");
+const newQuoteCategory = document.getElementById("newQuoteCategory");
 
-// Populate the category dropdown with unique categories
-function populateCategories() {
-  const categories = [...new Set(quotes.map(q => q.category))];
-  categorySelect.innerHTML = categories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
-}
-
-// Show a random quote from the selected category
+// ✅ 3. Function to show a random quote
 function showRandomQuote() {
   const selectedCategory = categorySelect.value;
-  const filteredQuotes = quotes.filter(q => q.category === selectedCategory);
+
+  const filteredQuotes = selectedCategory === "all"
+    ? quotes
+    : quotes.filter(q => q.category === selectedCategory);
 
   if (filteredQuotes.length === 0) {
-    quoteDisplay.textContent = "No quotes in this category.";
+    quoteDisplay.textContent = "No quotes found in this category.";
     return;
   }
 
   const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
-  quoteDisplay.textContent = filteredQuotes[randomIndex].text;
+  quoteDisplay.textContent = `"${filteredQuotes[randomIndex].text}"`;
 }
 
-// Add a new quote with its category
+// ✅ 4. Function to add a new quote and update the DOM
 function addQuote() {
-  const text = document.getElementById("newQuoteText").value.trim();
-  const category = document.getElementById("newQuoteCategory").value.trim();
+  const text = newQuoteText.value.trim();
+  const category = newQuoteCategory.value.trim().toLowerCase();
 
-  if (!text || !category) {
+  if (text === "" || category === "") {
     alert("Please enter both a quote and a category.");
     return;
   }
 
-  // Add new quote to the array
+  // Add to quotes array
   quotes.push({ text, category });
 
-  // Add new category to dropdown if not already there
-  const categoryExists = [...categorySelect.options].some(option => option.value === category);
-  if (!categoryExists) {
-    const newOption = document.createElement("option");
-    newOption.value = category;
-    newOption.textContent = category;
-    categorySelect.appendChild(newOption);
-  }
-
   // Clear input fields
-  document.getElementById("newQuoteText").value = "";
-  document.getElementById("newQuoteCategory").value = "";
+  newQuoteText.value = "";
+  newQuoteCategory.value = "";
 
-  alert("Quote added!");
+  alert("Quote added successfully!");
+
+  // Update the category dropdown with new categories
+  populateCategories();
 }
 
-// Event listeners
-newQuoteButton.addEventListener("click", showRandomQuote);
-window.addEventListener("load", populateCategories);
+// ✅ 5. Populate dropdown with unique categories
+function populateCategories() {
+  const categories = [...new Set(quotes.map(q => q.category))];
+
+  // Clear existing options
+  categorySelect.innerHTML = '<option value="all">All</option>';
+
+  // Add each unique category
+  categories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+    categorySelect.appendChild(option);
+  });
+}
+
+// ✅ 6. Event listeners for buttons
+newQuoteBtn.addEventListener("click", showRandomQuote); // Show quote
+addQuoteBtn.addEventListener("click", addQuote);        // Add quote
+categorySelect.addEventListener("change", showRandomQuote); // Filter quote
+
+// ✅ 7. Initialize the category dropdown
+populateCategories();
