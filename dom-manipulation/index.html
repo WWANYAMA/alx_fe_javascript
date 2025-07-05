@@ -1,37 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Dynamic Quote Generator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- Category filter -->
-  <select id="categoryFilter" onchange="filterQuotes()">
-    <option value="all">All Categories</option>
-    <!-- Categories will be populated dynamically -->
-  </select>
+  <input type="text" id="quote-input" placeholder="Enter a quote">
+  <button onclick="addQuote()">Add Quote</button>
 
-  <!-- Display area -->
-  <div id="quoteDisplay"></div>
-
-  <!-- Show random quote -->
-  <button id="newQuote">Show New Quote</button>
-
-  <!-- Inputs for adding a new quote -->
-  <div>
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button onclick="addQuote()">Add Quote</button>
+  <div id="conflict-notification" style="display:none; color: red; margin-top: 10px;">
+    ⚠️ Server updated the quotes. <button onclick="resolveManually()">View</button>
   </div>
 
-  <!-- Export & import -->
-  <button onclick="exportToJsonFile()">Export Quotes</button>
-  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+  <ul id="quote-list"></ul>
 
-  <!-- Link to JS -->
   <script src="script.js"></script>
 </body>
 </html>
+
